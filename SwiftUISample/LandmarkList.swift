@@ -6,16 +6,28 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct LandmarkList: View {
+   
+    #if APPCLIP
+    let title = "Welcome Clip"
+    #else
+    let title = "Landmarks"
+    #endif
+    
     var body: some View {
         NavigationView {
             List(landmarkData, id: \.id) { landmark in
+                #if !APPCLIP
                 NavigationLink(destination: DetailView(landmark: landmark)) {
                     LandmarkRow(landmark: landmark)
                 }
+                #else
+                LandmarkRow(landmark: landmark)
+                #endif
             }
-            .navigationBarTitle("Landmarks")
+            .navigationBarTitle(title)
         }
     }
 }
